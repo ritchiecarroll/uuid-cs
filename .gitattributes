@@ -1,1 +1,3 @@
 * text=auto eol=lf
+# VALIDATION.md is linked from the NuGet package and must match the packed copy byte for byte.
+VALIDATION.md -text
