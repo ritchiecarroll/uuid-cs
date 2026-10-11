@@ -55,3 +55,9 @@ commit: 54 matched, 0 disclosed. The package ships that report as `VALIDATION.md
 
 The conversion is a derivative of the upstream source and carries its license. [LICENSE](LICENSE) is the upstream
 license, verbatim (BSD 3-Clause).
+
+## For the module's maintainers
+
+This conversion is published by the go2cs project, not by the maintainers of `github.com/google/uuid`. If you
+maintain github.com/google/uuid and would like to own it, open an issue here and we will gladly transfer this
+repository, and the NuGet package ID with it, to you.
