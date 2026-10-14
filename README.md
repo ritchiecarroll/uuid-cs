@@ -18,8 +18,7 @@ Published as [`nugetgo.github.com.google.uuid`](https://www.nuget.org/packages/n
 A rebuild of the same Go version adds a fourth, revision part: `1.6.0.N`, where N counts up from 1.
 
 unofficial go2cs C# conversion of github.com/google/uuid v1.6.0, built on the Go 1.24.13 standard library; not
-affiliated with or endorsed by Google Inc. or the Go project. Security: that standard library carries no Go security
-fixes issued after Go 1.24.13; review before any production use.
+affiliated with or endorsed by Google Inc. or the Go project. Security: the Go standard library this package is built on includes no Go security fixes released after Go 1.24.13; review before any production use.
 
 ## What is here
 
