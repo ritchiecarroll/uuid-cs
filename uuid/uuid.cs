@@ -51,17 +51,13 @@ public static bool IsInvalidLengthError(error err) {
     return ok;
 }
 
-// Hoisted @string literals (single allocation; Go keeps these in RODATA)
-internal static readonly @string urnUuidˢ = "urn:uuid:"u8;
-internal static readonly @string invalidUuidFormatˢ = "invalid UUID format"u8;
-
 public static (UUID, error) Parse(@string s) {
     UUID uuid = default!;
     var exprᴛ1 = len(s);
     if (exprᴛ1 is 36) {
     }
     else if (exprᴛ1 == 36 + 9) {
-        if (!strings.EqualFold(s[..9], urnUuidˢ)) {
+        if (!strings.EqualFold(s[..9], "urn:uuid:")) {
             return (uuid.Clone(), fmt.Errorf("invalid urn prefix: %q"u8, s[..9]));
         }
         s = s[9..];
@@ -71,10 +67,10 @@ public static (UUID, error) Parse(@string s) {
     }
     else if (exprᴛ1 is 32) {
         bool ok = default!;
-        foreach (var (i, _) in uuid) {
+        foreach (var i in range(uuid)) {
             (uuid[i], ok) = xtob(s[i * 2], s[i * 2 + 1]);
             if (!ok) {
-                return (uuid.Clone(), errors.New(invalidUuidFormatˢ));
+                return (uuid.Clone(), errors.New("invalid UUID format"));
             }
         }
         return (uuid.Clone(), default!);
@@ -84,7 +80,7 @@ public static (UUID, error) Parse(@string s) {
     }
 
     if (s[8] != (rune)'-' || s[13] != (rune)'-' || s[18] != (rune)'-' || s[23] != (rune)'-') {
-        return (uuid.Clone(), errors.New(invalidUuidFormatˢ));
+        return (uuid.Clone(), errors.New("invalid UUID format"));
     }
     foreach (var (i, x) in new nint[]{
         0, 2, 4, 6,
@@ -95,7 +91,7 @@ public static (UUID, error) Parse(@string s) {
     }.array()) {
         var (v, ok) = xtob(s[x], s[x + 1]);
         if (!ok) {
-            return (uuid.Clone(), errors.New(invalidUuidFormatˢ));
+            return (uuid.Clone(), errors.New("invalid UUID format"));
         }
         uuid[i] = v;
     }
@@ -121,7 +117,7 @@ public static (UUID, error) ParseBytes(slice<byte> b) {
         for (nint i = 0; i < 32; i += 2) {
             (uuid[i / 2], ok) = xtob(b[i], b[i + 1]);
             if (!ok) {
-                return (uuid.Clone(), errors.New(invalidUuidFormatˢ));
+                return (uuid.Clone(), errors.New("invalid UUID format"));
             }
         }
         return (uuid.Clone(), default!);
@@ -131,7 +127,7 @@ public static (UUID, error) ParseBytes(slice<byte> b) {
     }
 
     if (b[8] != (rune)'-' || b[13] != (rune)'-' || b[18] != (rune)'-' || b[23] != (rune)'-') {
-        return (uuid.Clone(), errors.New(invalidUuidFormatˢ));
+        return (uuid.Clone(), errors.New("invalid UUID format"));
     }
     foreach (var (i, x) in new nint[]{
         0, 2, 4, 6,
@@ -142,7 +138,7 @@ public static (UUID, error) ParseBytes(slice<byte> b) {
     }.array()) {
         var (v, ok) = xtob(b[x], b[x + 1]);
         if (!ok) {
-            return (uuid.Clone(), errors.New(invalidUuidFormatˢ));
+            return (uuid.Clone(), errors.New("invalid UUID format"));
         }
         uuid[i] = v;
     }
@@ -179,7 +175,7 @@ public static error Validate(@string s) {
     if (exprᴛ1 is 36) {
     }
     else if (exprᴛ1 == 36 + 9) {
-        if (!strings.EqualFold(s[..9], urnUuidˢ)) {
+        if (!strings.EqualFold(s[..9], "urn:uuid:")) {
             return fmt.Errorf("invalid urn prefix: %q"u8, s[..9]);
         }
         s = s[9..];
@@ -194,7 +190,7 @@ public static error Validate(@string s) {
         for (nint i = 0; i < len(s); i += 2) {
             var (_, ok) = xtob(s[i], s[i + 1]);
             if (!ok) {
-                return errors.New(invalidUuidFormatˢ);
+                return errors.New("invalid UUID format");
             }
         }
     }
@@ -204,16 +200,17 @@ public static error Validate(@string s) {
 
     if (len(s) == 36) {
         if (s[8] != (rune)'-' || s[13] != (rune)'-' || s[18] != (rune)'-' || s[23] != (rune)'-') {
-            return errors.New(invalidUuidFormatˢ);
+            return errors.New("invalid UUID format");
         }
         foreach (var (_, x) in new nint[]{0, 2, 4, 6, 9, 11, 14, 16, 19, 21, 24, 26, 28, 30, 32, 34}.slice()) {
             {
                 var (_, ok) = xtob(s[x], s[x + 1]); if (!ok) {
-                    return errors.New(invalidUuidFormatˢ);
+                    return errors.New("invalid UUID format");
                 }
             }
         }
     }
+
     return default!;
 }
 
@@ -222,7 +219,7 @@ public static @string String(this UUID uuid) {
 
     array<byte> buf = new(36);
     encodeHex(buf[..], uuid);
-    return ((@string)(buf[..]));
+    return (@string)(buf[..]);
 }
 
 public static @string URN(this UUID uuid) {
@@ -231,7 +228,7 @@ public static @string URN(this UUID uuid) {
     array<byte> buf = new(45); /* 36 + 9 */
     copy(buf[..], "urn:uuid:"u8);
     encodeHex(buf[9..], uuid);
-    return ((@string)(buf[..]));
+    return (@string)(buf[..]);
 }
 
 internal static void encodeHex(slice<byte> dst, UUID uuid) {
@@ -270,7 +267,7 @@ public static ΔVariant Variant(this UUID uuid) {
 public static ΔVersion Version(this UUID uuid) {
     uuid = uuid.Clone();
 
-    return ((ΔVersion)((uuid[6] >> (int)(4))));
+    return (ΔVersion)(uuid[6] >> 4);
 }
 
 public static @string String(this ΔVersion v) {
@@ -280,29 +277,22 @@ public static @string String(this ΔVersion v) {
     return fmt.Sprintf("VERSION_%d"u8, v);
 }
 
-// Hoisted @string literals (single allocation; Go keeps these in RODATA)
-internal static readonly @string rfc4122ˢ = "RFC4122"u8;
-internal static readonly @string reservedˢ = "Reserved"u8;
-internal static readonly @string microsoftˢ = "Microsoft"u8;
-internal static readonly @string futureˢ = "Future"u8;
-internal static readonly @string invalidˢ = "Invalid"u8;
-
 public static @string String(this ΔVariant v) {
     var exprᴛ1 = v;
     if (exprᴛ1 == RFC4122) {
-        return rfc4122ˢ;
+        return "RFC4122";
     }
     if (exprᴛ1 == Reserved) {
-        return reservedˢ;
+        return "Reserved";
     }
     if (exprᴛ1 == Microsoft) {
-        return microsoftˢ;
+        return "Microsoft";
     }
     if (exprᴛ1 == Future) {
-        return futureˢ;
+        return "Future";
     }
     if (exprᴛ1 == Invalid) {
-        return invalidˢ;
+        return "Invalid";
     }
 
     return fmt.Sprintf("BadVariant%d"u8, (nint)(byte)v);

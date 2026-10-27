@@ -15,20 +15,24 @@ public static (UUID, error) NewUUID() {
     if (err != default!) {
         return (uuid.Clone(), err);
     }
+
     var timeLow = (uint32)(int64)((ΔTime)(now & 0xffffffffL));
-    var timeMid = (uint16)(int64)((ΔTime)(((now >> (int)(32))) & 0xffff));
-    var timeHi = (uint16)(int64)((ΔTime)(((now >> (int)(48))) & 0x0fff));
+    var timeMid = (uint16)(int64)((ΔTime)((now >> 32) & 0xffff));
+    var timeHi = (uint16)(int64)((ΔTime)((now >> 48) & 0x0fff));
     timeHi |= (uint16)(0x1000);
+
     binary.BigEndian.PutUint32(uuid[0..], timeLow);
     binary.BigEndian.PutUint16(uuid[4..], timeMid);
     binary.BigEndian.PutUint16(uuid[6..], timeHi);
     binary.BigEndian.PutUint16(uuid[8..], seq);
+
     ᏑnodeMu.Lock();
     if (nodeID == zeroID) {
-        setNodeInterface(""u8);
+        setNodeInterface("");
     }
     copy(uuid[10..], nodeID[..]);
     ᏑnodeMu.Unlock();
+
     return (uuid.Clone(), default!);
 }
 

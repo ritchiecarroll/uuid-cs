@@ -1,4 +1,4 @@
-> unofficial go2cs C# conversion of github.com/google/uuid v1.6.0, built on the Go 1.24.13 standard library; not affiliated with or endorsed by Google Inc. or the Go project. Security: that standard library carries no Go security fixes issued after Go 1.24.13; review before any production use.
+> unofficial go2cs C# conversion of github.com/google/uuid v1.6.0, built on the Go 1.26.10 standard library; not affiliated with or endorsed by Google Inc. or the Go project. Security: the Go standard library this package is built on includes no Go security fixes released after Go 1.26.10; review before any production use.
 
 # `github.com/google/uuid` — module validation summary
 
@@ -9,7 +9,7 @@ Both sides of every reading were built with `-tags purego,math_big_pure_go,safe`
 
 | Package | Matched | Disclosed | Input digest | Proof |
 |:--|--:|--:|:--|:--|
-| `github.com/google/uuid` | 54 | 0 | `sha256-1d40aaa871f4e430ac651e70e05593f11e9ed13539146378156e81f13af51b28` | [index.md](index.md) |
+| `github.com/google/uuid` | 54 | 0 | `sha256-b6bb4a64d3d5b8de88e2da3169597d145e548caf71d60c84a6b0761e5adce6e3` | [index.md](index.md) |
 
 **Total: 54 matched · 0 disclosed** across 1 package(s).
 

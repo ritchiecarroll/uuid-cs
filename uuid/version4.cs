@@ -50,6 +50,7 @@ internal static (UUID, error) newRandomFromPool() {
     copy(uuid[..], pool.slice(poolPos, (poolPos + 16)));
     poolPos += 16;
     ᏑpoolMu.Unlock();
+
     uuid[6] = (byte)(((byte)(uuid[6] & 0x0f)) | 0x40);
     uuid[8] = (byte)(((byte)(uuid[8] & 0x3f)) | 0x80);
     return (uuid.Clone(), default!);

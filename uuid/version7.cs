@@ -23,20 +23,24 @@ public static (UUID, error) NewV7FromReader(io.Reader r) {
     if (err != default!) {
         return (uuid.Clone(), err);
     }
+
     makeV7(uuid[..]);
     return (uuid.Clone(), default!);
 }
 
 internal static void makeV7(slice<byte> uuid) {
     _ = uuid[15];
+
     var (t, s) = getV7Time();
-    uuid[0] = (byte)((t >> (int)(40)));
-    uuid[1] = (byte)((t >> (int)(32)));
-    uuid[2] = (byte)((t >> (int)(24)));
-    uuid[3] = (byte)((t >> (int)(16)));
-    uuid[4] = (byte)((t >> (int)(8)));
+
+    uuid[0] = (byte)(t >> 40);
+    uuid[1] = (byte)(t >> 32);
+    uuid[2] = (byte)(t >> 24);
+    uuid[3] = (byte)(t >> 16);
+    uuid[4] = (byte)(t >> 8);
     uuid[5] = (byte)t;
-    uuid[6] = (byte)(0x70 | ((byte)(0x0F & (byte)((s >> (int)(8))))));
+
+    uuid[6] = (byte)(0x70 | ((byte)(0x0F & (byte)(s >> 8))));
     uuid[7] = (byte)s;
 }
 
@@ -51,14 +55,15 @@ internal static (int64 milli, int64 seq) getV7Time() {
     try {
         ᏑtimeMu.Lock();
         defer(ᏑtimeMu.Unlock, ref ᒐ);
+
         var nano = timeNow().UnixNano();
         milli = nano / (int64)nanoPerMilli;
-        seq = ((nano - milli * (int64)nanoPerMilli) >> (int)(8));
-        var now = (milli << (int)(12)) + seq;
+        seq = (nano - milli * (int64)nanoPerMilli) >> 8;
+        var now = (milli << 12) + seq;
         if (now <= lastV7time) {
             now = lastV7time + 1;
-            milli = (now >> (int)(12));
-            seq = (int64)(now & 0xfff);
+            milli = now >> 12;
+            seq = now & 0xfff;
         }
         lastV7time = now;
     }

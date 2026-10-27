@@ -38,7 +38,7 @@ public static (UUID, error) NewDCEGroup() {
 public static ΔDomain Domain(this UUID uuid) {
     uuid = uuid.Clone();
 
-    return ((ΔDomain)uuid[9]);
+    return (ΔDomain)uuid[9];
 }
 
 public static uint32 ID(this UUID uuid) {
@@ -47,21 +47,16 @@ public static uint32 ID(this UUID uuid) {
     return binary.BigEndian.Uint32(uuid[0..4]);
 }
 
-// Hoisted @string literals (single allocation; Go keeps these in RODATA)
-internal static readonly @string personˢ = "Person"u8;
-internal static readonly @string groupˢ = "Group"u8;
-internal static readonly @string orgˢ = "Org"u8;
-
 public static @string String(this ΔDomain d) {
     var exprᴛ1 = d;
     if (exprᴛ1 == Person) {
-        return personˢ;
+        return "Person";
     }
     if (exprᴛ1 == Group) {
-        return groupˢ;
+        return "Group";
     }
     if (exprᴛ1 == Org) {
-        return orgˢ;
+        return "Org";
     }
 
     return fmt.Sprintf("Domain%d"u8, (nint)(byte)d);

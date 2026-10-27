@@ -15,16 +15,20 @@ public static (UUID, error) NewV6() {
     if (err != default!) {
         return (uuid.Clone(), err);
     }
+
     binary.BigEndian.PutUint64(uuid[0..], (uint64)(int64)now);
     binary.BigEndian.PutUint16(uuid[8..], seq);
+
     uuid[6] = (byte)(0x60 | ((byte)(uuid[6] & 0x0F)));
     uuid[8] = (byte)(0x80 | ((byte)(uuid[8] & 0x3F)));
+
     ᏑnodeMu.Lock();
     if (nodeID == zeroID) {
-        setNodeInterface(""u8);
+        setNodeInterface("");
     }
     copy(uuid[10..], nodeID[..]);
     ᏑnodeMu.Unlock();
+
     return (uuid.Clone(), default!);
 }
 

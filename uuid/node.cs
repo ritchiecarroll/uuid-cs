@@ -36,9 +36,6 @@ public static bool SetNodeInterface(@string name) {
     finally { ᒐ.Run(); }
 }
 
-// Hoisted @string literals (single allocation; Go keeps these in RODATA)
-internal static readonly @string randomˢ = "random"u8;
-
 internal static bool setNodeInterface(@string name) {
     var (iname, addr) = getHardwareInterface(name);
     if (iname != ""u8 && addr != default!) {
@@ -46,8 +43,9 @@ internal static bool setNodeInterface(@string name) {
         copy(nodeID[..], addr);
         return true;
     }
+
     if (name == ""u8) {
-        ifname = randomˢ;
+        ifname = "random";
         randomBits(nodeID[..]);
         return true;
     }
@@ -60,7 +58,7 @@ public static slice<byte> NodeID() {
         defer(ᏑnodeMu.Unlock, ref ᒐ);
         ᏑnodeMu.Lock();
         if (nodeID == zeroID) {
-            setNodeInterface(""u8);
+            setNodeInterface("");
         }
         var nid = nodeID.Clone();
         return nid[..];
@@ -68,9 +66,6 @@ public static slice<byte> NodeID() {
     catch (Exception ᒐex) when (GoFrame.IsPanic(ᒐex, out PanicException? ᒐp)) { GoFrame.Capture(ᒐp); return default!; }
     finally { ᒐ.Run(); }
 }
-
-// Hoisted @string literals (single allocation; Go keeps these in RODATA)
-internal static readonly @string userˢ = "user"u8;
 
 public static bool SetNodeID(slice<byte> id) {
     GoFrame ᒐ = default;
@@ -81,7 +76,7 @@ public static bool SetNodeID(slice<byte> id) {
         defer(ᏑnodeMu.Unlock, ref ᒐ);
         ᏑnodeMu.Lock();
         copy(nodeID[..], id);
-        ifname = userˢ;
+        ifname = "user";
         return true;
     }
     catch (Exception ᒐex) when (GoFrame.IsPanic(ᒐex, out PanicException? ᒐp)) { GoFrame.Capture(ᒐp); return default!; }

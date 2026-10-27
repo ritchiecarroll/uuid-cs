@@ -68,20 +68,20 @@ using static go.github.com.google.uuid_package;
 // or has none - golib, the BCL and hand-written conversions - and reports its own C# position.
 
 // <GoSourcePositionMaps>
-[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/dce.go", "dce.cs", "ABNAgoKCgoKUroKugqqiqqL2gpSkpKQ=")]
+[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/dce.go", "dce.cs", "ABNAgoKCgoKUroKugqqiqqKmgpSkpKQ=")]
 [assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/hash.go", "hash.cs", "AA4ewsLCyAAEFqKCgoKCgoKCgq6irqI=")]
 [assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/marshal.go", "marshal.cs", "AAoUooKCqIKCgpSCqKKogoKUgg==")]
-[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/node.go", "node.cs", "ABAqooKCAAUSooKCAAgGgoKCgoKcgoKClKqigoKClIIACAyigpSCgoKC2qKCgg==")]
+[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/node.go", "node.cs", "ABAqooKCAAUSooKC1oKCgoKCrIKCgpSqooKCgpSC3KKClIKCgoLaooKC")]
 [assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/node_net.go", "node_net.cs", "AAwmgoKCgoKmgoKm")]
-[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/null.go", "null.cs", "AA8cAAYqgoKCloKCgpaCqKKClqiigpaogoKUgoKoooKWqIKCgoKUgoKoooKWqKKCgpSCgg==")]
-[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/sql.go", "sql.cs", "AAwegpSogpiCgpa4gpqClMaWrKI=")]
-[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/time.go", "time.cs", "ABk8mrKCgoKsooKC1oKGgpSIgpSCAAIUooKC1oKClKqigoKipIKCgoKUgoKCvKKClIKkgqSCgoKkqqI=")]
+[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/null.go", "null.cs", "AA8cAAYqgoKCpoKCgqaCqKKClqiigqaogoKUgoKoooKmqIKCgoKUgoKoooKmqKKCgpSCgg==")]
+[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/sql.go", "sql.cs", "AAwegpSogqiCgqa4gqqClMamrKI=")]
+[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/time.go", "time.cs", "ABk8mrKCgoKsooKC1oKWgpSYgpSCAAIUooKC1oKClKqigoKipIKCgoKUgoKCvKKClIKkgqSCgoKkqqI=")]
 [assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/util.go", "util.cs", "AAoYgoCCygASKIKCgg==")]
-[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/uuid.go", "uuid.cs", "ACFQAAoSgqiCggAGGIKCvIKUqKiCgoKCpqSogpTugoKUlKiCgraClKSkgoKCgqakqIKU7oKClJSqgoKClKqygqiigpQAAhKCvIKUqIKUqIKCgsqogoKUgoCCyqqigoKqooKCgqaigoKCgoKCgoKoopSkpKTKoqaCgpQACQaClKSkpKSkAAISgoKClAACHIIAAhKigoKCosyCgqKU")]
-[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/version1.go", "version1.cs", "AAsmgoKCgpaCgoKEgoKChIKClIKE")]
-[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/version4.go", "version4.cs", "AAoagr6CAAMigoKUqIKCgoKUgoKmgoKCgoKCgpSUgoKEgoI=")]
-[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/version6.go", "version6.cs", "AAsqgoKCggABIoKEgoSCgpSChA==")]
-[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/version7.go", "version7.cs", "AAsugoKClIKsgoKCloKsAAAchISCgoKCgoSCAAYcwoKEgoSCgoKCgpSC")]
+[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/uuid.go", "uuid.cs", "ACFQAAoSgqiCggACGIKCvIKUqKiCgoKCpqSogpTugoKUlKiCgraClKSkgoKCgqakqIKU7oKClJSqgoKClKqygqiigpQAAhKCvIKUqIKUqIKCgsqogoKUgoCC2qqigoKqooKCgqaigoKCgoKCgoKoopSkpKTKoqaCgpSmgpSkpKSkpAACEoKCgpQAAhyCAAISooKCgqLMgoKilA==")]
+[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/version1.go", "version1.cs", "AAsmgoKCgqaCgoKUgoKClIKClIKU")]
+[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/version4.go", "version4.cs", "AAoagr6CAAMigoKUqIKCgoKUgoKmgoKCgoKCgpSUgoKUgoI=")]
+[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/version6.go", "version6.cs", "AAsqgoKCggACIoKUgpSCgpSClA==")]
+[assembly: go.GoPositionMap("github.com/google/uuid@v1.6.0/version7.go", "version7.cs", "AAsugoKClIKsgoKCpoKsAAAclJSCgoKCgpSCAAYcwoKUgoSCgoKCgpSC")]
 // </GoSourcePositionMaps>
 
 namespace go.github.com.google;

@@ -25,11 +25,13 @@ public static error Scan(this ref NullUUID nu, any value) {
         (nu.UUID, nu.Valid) = (Nil.Clone(), false);
         return default!;
     }
+
     var err = nu.UUID.Scan(value);
     if (err != default!) {
         nu.Valid = false;
         return err;
     }
+
     nu.Valid = true;
     return default!;
 }
@@ -49,6 +51,7 @@ public static (slice<byte>, error) MarshalBinary(this NullUUID nu) {
     if (nu.Valid) {
         return (nu.UUID[..], default!);
     }
+
     return (slice<byte>(default!), default!);
 }
 
@@ -67,6 +70,7 @@ public static (slice<byte>, error) MarshalText(this NullUUID nu) {
     if (nu.Valid) {
         return nu.UUID.MarshalText();
     }
+
     return (jsonNull, default!);
 }
 
@@ -87,6 +91,7 @@ public static (slice<byte>, error) MarshalJSON(this NullUUID nu) {
     if (nu.Valid) {
         return json.Marshal(nu.UUID);
     }
+
     return (jsonNull, default!);
 }
 

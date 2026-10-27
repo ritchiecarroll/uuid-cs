@@ -16,7 +16,7 @@ internal static void randomBits(slice<byte> b) {
     }
 }
 
-internal static array<byte> xvalues = new byte[]{
+[GoLazy] partial class lazyᴛxvalues { internal static array<byte> xvalues = new byte[]{
     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
@@ -33,12 +33,12 @@ internal static array<byte> xvalues = new byte[]{
     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
-}.array();
+}.array(); }
 
 internal static (byte, bool) xtob(byte x1, byte x2) {
     var b1 = xvalues[x1];
     var b2 = xvalues[x2];
-    return ((byte)(((byte)(b1 << (int)(4))) | b2), b1 != 255 && b2 != 255);
+    return ((byte)(((byte)(b1 << 4)) | b2), b1 != 255 && b2 != 255);
 }
 
 } // end uuid_package

@@ -19,10 +19,12 @@ public static error Scan(this ref UUID uuid, any src) {
         if (srcΔ1 == ""u8) {
             return default!;
         }
+
         var (u, err) = Parse(srcΔ1);
         if (err != default!) {
             return fmt.Errorf("Scan: %v"u8, err);
         }
+
         uuid = u.Clone();
         break;
     }
@@ -30,8 +32,9 @@ public static error Scan(this ref UUID uuid, any src) {
         if (len(srcΔ1) == 0) {
             return default!;
         }
+
         if (len(srcΔ1) != 16) {
-            return uuid.Scan(((@string)srcΔ1));
+            return uuid.Scan((@string)srcΔ1);
         }
         copy((uuid)[..], srcΔ1);
         break;
@@ -40,6 +43,7 @@ public static error Scan(this ref UUID uuid, any src) {
         var srcΔ1 = src;
         return fmt.Errorf("Scan: unable to scan type %T into UUID"u8, srcΔ1);
     }}
+
     return default!;
 }
 
