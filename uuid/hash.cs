@@ -11,31 +11,37 @@ using crypto;
 
 partial class uuid_package {
 
-public static UUID NameSpaceDNS;
+public static readonly ж<UUID> ᏑNameSpaceDNS = new StaticBox<UUID>(default(UUID));
+public static ref UUID NameSpaceDNS => ref ((StaticBox<UUID>)ᏑNameSpaceDNS).ValueSlot;
 internal static void initᴛNameSpaceDNS() {
     var (ᴛ1, ᴛ2) = Parse("6ba7b810-9dad-11d1-80b4-00c04fd430c8");
     NameSpaceDNS = Must(ᴛ1, ᴛ2);
 }
-public static UUID NameSpaceURL;
+public static readonly ж<UUID> ᏑNameSpaceURL = new StaticBox<UUID>(default(UUID));
+public static ref UUID NameSpaceURL => ref ((StaticBox<UUID>)ᏑNameSpaceURL).ValueSlot;
 internal static void initᴛNameSpaceURL() {
     var (ᴛ3, ᴛ4) = Parse("6ba7b811-9dad-11d1-80b4-00c04fd430c8");
     NameSpaceURL = Must(ᴛ3, ᴛ4);
 }
-public static UUID NameSpaceOID;
+public static readonly ж<UUID> ᏑNameSpaceOID = new StaticBox<UUID>(default(UUID));
+public static ref UUID NameSpaceOID => ref ((StaticBox<UUID>)ᏑNameSpaceOID).ValueSlot;
 internal static void initᴛNameSpaceOID() {
     var (ᴛ5, ᴛ6) = Parse("6ba7b812-9dad-11d1-80b4-00c04fd430c8");
     NameSpaceOID = Must(ᴛ5, ᴛ6);
 }
-public static UUID NameSpaceX500;
+public static readonly ж<UUID> ᏑNameSpaceX500 = new StaticBox<UUID>(default(UUID));
+public static ref UUID NameSpaceX500 => ref ((StaticBox<UUID>)ᏑNameSpaceX500).ValueSlot;
 internal static void initᴛNameSpaceX500() {
     var (ᴛ7, ᴛ8) = Parse("6ba7b814-9dad-11d1-80b4-00c04fd430c8");
     NameSpaceX500 = Must(ᴛ7, ᴛ8);
 }
-public static UUID Nil;
-public static UUID Max = new UUID(new byte[]{
+public static readonly ж<UUID> ᏑNil = new StaticBox<UUID>(default(UUID));
+public static ref UUID Nil => ref ((StaticBox<UUID>)ᏑNil).ValueSlot;
+public static readonly ж<UUID> ᏑMax = new StaticBox<UUID>(new UUID(new byte[]{
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
-}.array());
+}.array()));
+public static ref UUID Max => ref ((StaticBox<UUID>)ᏑMax).ValueSlot;
 
 public static UUID NewHash(hash.Hash h, UUID space, slice<byte> data, nint version) {
     space = space.Clone();
@@ -43,8 +49,8 @@ public static UUID NewHash(hash.Hash h, UUID space, slice<byte> data, nint versi
     h.Reset();
     h.Write(space[..]);
     h.Write(data);
-    var s = h.Sum(default!);
-    UUID uuid = default!;
+    var s = h.Sum(default);
+    UUID uuid = default;
     copy(uuid[..], s);
     uuid[6] = (byte)(((byte)(uuid[6] & 0x0f)) | (uint8)((version & 0xf) << 4));
     uuid[8] = (byte)(((byte)(uuid[8] & 0x3f)) | 0x80);

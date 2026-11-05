@@ -19,7 +19,7 @@ public static ΔDomain Org => /* Domain(2) */ 2;
 
 public static (UUID, error) NewDCESecurity(ΔDomain domain, uint32 id) {
     var (uuid, err) = NewUUID();
-    if (err == default!) {
+    if (err == nil) {
         uuid[6] = (byte)(((byte)(uuid[6] & 0x0f)) | 0x20);
         uuid[9] = (byte)domain;
         binary.BigEndian.PutUint32(uuid[0..], id);
@@ -48,18 +48,18 @@ public static uint32 ID(this UUID uuid) {
 }
 
 public static @string String(this ΔDomain d) {
-    var exprᴛ1 = d;
-    if (exprᴛ1 == Person) {
+    switch (d) {
+    case var ᴛ when ᴛ == Person: {
         return "Person";
     }
-    if (exprᴛ1 == Group) {
+    case var ᴛ when ᴛ == Group: {
         return "Group";
     }
-    if (exprᴛ1 == Org) {
+    case var ᴛ when ᴛ == Org: {
         return "Org";
-    }
+    }}
 
-    return fmt.Sprintf("Domain%d"u8, (nint)(byte)d);
+    return fmt.Sprintf("Domain%d"u8, (nint)d);
 }
 
 } // end uuid_package

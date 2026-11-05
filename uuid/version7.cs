@@ -11,21 +11,21 @@ partial class uuid_package {
 
 public static (UUID, error) NewV7() {
     var (uuid, err) = NewRandom();
-    if (err != default!) {
+    if (err != nil) {
         return (uuid.Clone(), err);
     }
     makeV7(uuid[..]);
-    return (uuid.Clone(), default!);
+    return (uuid.Clone(), default);
 }
 
 public static (UUID, error) NewV7FromReader(io.Reader r) {
     var (uuid, err) = NewRandomFromReader(r);
-    if (err != default!) {
+    if (err != nil) {
         return (uuid.Clone(), err);
     }
 
     makeV7(uuid[..]);
-    return (uuid.Clone(), default!);
+    return (uuid.Clone(), default);
 }
 
 internal static void makeV7(slice<byte> uuid) {
@@ -49,8 +49,8 @@ internal static int64 lastV7time;
 internal static UntypedInt nanoPerMilli => 1000000;
 
 internal static (int64 milli, int64 seq) getV7Time() {
-    int64 milli = default!;
-    int64 seq = default!;
+    int64 milli = default;
+    int64 seq = default;
     GoFrame ᒐ = default;
     try {
         ᏑtimeMu.Lock();

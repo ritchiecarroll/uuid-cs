@@ -19,15 +19,15 @@ internal static UntypedInt epoch => /* unix - lillian */ 141427;
 internal static UntypedInt g1582 => /* epoch * 86400 */ 12219292800;
 internal static UntypedInt g1582ns100 => /* g1582 * 10000000 */ 122192928000000000;
 
-internal static ж<sync.Mutex> ᏑtimeMu = new StandardBox<sync.Mutex>(default(sync.Mutex));
-internal static ref sync.Mutex timeMu => ref ᏑtimeMu.Value;
+internal static readonly ж<sync.Mutex> ᏑtimeMu = new StaticBox<sync.Mutex>(default(sync.Mutex));
+internal static ref sync.Mutex timeMu => ref ((StaticBox<sync.Mutex>)ᏑtimeMu).ValueSlot;
 internal static uint64 lasttime;
 internal static uint16 clockSeq;
 internal static Func<time.Time> timeNow = time.Now;
 
 public static (int64 sec, int64 nsec) UnixTime(this ΔTime t) {
-    int64 sec = default!;
-    int64 nsec = default!;
+    int64 sec = default;
+    int64 nsec = default;
 
     sec = (int64)(t - (int64)g1582ns100);
     nsec = (sec % 10000000) * 100;
@@ -42,7 +42,7 @@ public static (ΔTime, uint16, error) GetTime() {
         ᏑtimeMu.Lock();
         return getTime();
     }
-    catch (Exception ᒐex) when (GoFrame.IsPanic(ᒐex, out PanicException? ᒐp)) { GoFrame.Capture(ᒐp); return default!; }
+    catch (Exception ᒐex) when (GoFrame.IsPanic(ᒐex, out PanicException? ᒐp)) { GoFrame.Capture(ᒐp); return default; }
     finally { ᒐ.Run(); }
 }
 
@@ -58,7 +58,7 @@ internal static (ΔTime, uint16, error) getTime() {
         clockSeq = (uint16)(((uint16)((clockSeq + 1) & 0x3fff)) | 0x8000);
     }
     lasttime = now;
-    return ((ΔTime)(int64)now, clockSeq, default!);
+    return ((ΔTime)(int64)now, clockSeq, default);
 }
 
 public static nint ClockSequence() {
@@ -68,7 +68,7 @@ public static nint ClockSequence() {
         ᏑtimeMu.Lock();
         return clockSequence();
     }
-    catch (Exception ᒐex) when (GoFrame.IsPanic(ᒐex, out PanicException? ᒐp)) { GoFrame.Capture(ᒐp); return default!; }
+    catch (Exception ᒐex) when (GoFrame.IsPanic(ᒐex, out PanicException? ᒐp)) { GoFrame.Capture(ᒐp); return default; }
     finally { ᒐ.Run(); }
 }
 
@@ -106,22 +106,25 @@ internal static void setClockSequence(nint seq) {
 public static ΔTime Time(this UUID uuid) {
     uuid = uuid.Clone();
 
-    ΔTime t = default!;
-    var exprᴛ1 = uuid.Version();
-    if (exprᴛ1 == (ΔVersion)(6)) {
+    ΔTime t = default;
+    switch (uuid.Version()) {
+    case var ᴛ when ᴛ == (ΔVersion)(6): {
         var time = binary.BigEndian.Uint64(uuid[..8]);
         t = (ΔTime)(int64)time;
+        break;
     }
-    else if (exprᴛ1 == (ΔVersion)(7)) {
+    case var ᴛ when ᴛ == (ΔVersion)(7): {
         var time = binary.BigEndian.Uint64(uuid[..8]);
         t = (ΔTime)(int64)((time >> 16) * 10000 + (uint64)g1582ns100);
+        break;
     }
-    else { /* default: */
+    default: {
         var time = (int64)binary.BigEndian.Uint32(uuid[0..4]);
         time |= (int64)(((int64)binary.BigEndian.Uint16(uuid[4..6]) << 32));
         time |= (int64)(((int64)((uint16)(binary.BigEndian.Uint16(uuid[6..8]) & 0xfff)) << 48));
         t = (ΔTime)time;
-    }
+        break;
+    }}
 
     return t;
 }

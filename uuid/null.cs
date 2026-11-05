@@ -21,26 +21,26 @@ partial struct NullUUID {
 }
 
 public static error Scan(this ref NullUUID nu, any value) {
-    if (value == default!) {
+    if (value == nil) {
         (nu.UUID, nu.Valid) = (Nil.Clone(), false);
-        return default!;
+        return default;
     }
 
     var err = nu.UUID.Scan(value);
-    if (err != default!) {
+    if (err != nil) {
         nu.Valid = false;
         return err;
     }
 
     nu.Valid = true;
-    return default!;
+    return default;
 }
 
 public static (driverꓸValue, error) Value(this NullUUID nu) {
     nu = nu.ΔClone();
 
     if (!nu.Valid) {
-        return (default!, default!);
+        return (default, default);
     }
     return nu.UUID.Value();
 }
@@ -49,10 +49,10 @@ public static (slice<byte>, error) MarshalBinary(this NullUUID nu) {
     nu = nu.ΔClone();
 
     if (nu.Valid) {
-        return (nu.UUID[..], default!);
+        return (nu.UUID[..], default);
     }
 
-    return (slice<byte>(default!), default!);
+    return (slice<byte>(default), default);
 }
 
 public static error UnmarshalBinary(this ref NullUUID nu, slice<byte> data) {
@@ -61,7 +61,7 @@ public static error UnmarshalBinary(this ref NullUUID nu, slice<byte> data) {
     }
     copy(nu.UUID[..], data);
     nu.Valid = true;
-    return default!;
+    return default;
 }
 
 public static (slice<byte>, error) MarshalText(this NullUUID nu) {
@@ -71,18 +71,18 @@ public static (slice<byte>, error) MarshalText(this NullUUID nu) {
         return nu.UUID.MarshalText();
     }
 
-    return (jsonNull, default!);
+    return (jsonNull, default);
 }
 
 public static error UnmarshalText(this ref NullUUID nu, slice<byte> data) {
     var (id, err) = ParseBytes(data);
-    if (err != default!) {
+    if (err != nil) {
         nu.Valid = false;
         return err;
     }
     nu.UUID = id.Clone();
     nu.Valid = true;
-    return default!;
+    return default;
 }
 
 public static (slice<byte>, error) MarshalJSON(this NullUUID nu) {
@@ -92,18 +92,18 @@ public static (slice<byte>, error) MarshalJSON(this NullUUID nu) {
         return json.Marshal(nu.UUID);
     }
 
-    return (jsonNull, default!);
+    return (jsonNull, default);
 }
 
 public static error UnmarshalJSON(this ж<NullUUID> Ꮡnu, slice<byte> data) {
     ref var nu = ref Ꮡnu.DerefOrNull();
 
     if (bytes.Equal(data, jsonNull)) {
-        nu = new NullUUID(nil);
-        return default!;
+        nu = new NullUUID();
+        return default;
     }
-    var err = json.Unmarshal(data, Ꮡnu.of(NullUUID.ᏑUUID));
-    nu.Valid = err == default!;
+    var err = json.Unmarshal(data, Ꮡnu.ᏑUUID);
+    nu.Valid = err == nil;
     return err;
 }
 

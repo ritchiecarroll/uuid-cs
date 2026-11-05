@@ -33,8 +33,8 @@ internal static UntypedInt randPoolSize => /* 16 * 16 */ 256;
 
 internal static io.Reader rander = rand.Reader;
 internal static bool poolEnabled = false;
-internal static ж<sync.Mutex> ᏑpoolMu = new StandardBox<sync.Mutex>(default(sync.Mutex));
-internal static ref sync.Mutex poolMu => ref ᏑpoolMu.Value;
+internal static readonly ж<sync.Mutex> ᏑpoolMu = new StaticBox<sync.Mutex>(default(sync.Mutex));
+internal static ref sync.Mutex poolMu => ref ((StaticBox<sync.Mutex>)ᏑpoolMu).ValueSlot;
 internal static nint poolPos = randPoolSize;
 internal static array<byte> pool = new(256);
 
@@ -52,34 +52,37 @@ public static bool IsInvalidLengthError(error err) {
 }
 
 public static (UUID, error) Parse(@string s) {
-    UUID uuid = default!;
-    var exprᴛ1 = len(s);
-    if (exprᴛ1 is 36) {
+    UUID uuid = default;
+    switch (len(s)) {
+    case 36: {
+        break;
     }
-    else if (exprᴛ1 == 36 + 9) {
+    case var ᴛ when ᴛ == 36 + 9: {
         if (!strings.EqualFold(s[..9], "urn:uuid:")) {
             return (uuid.Clone(), fmt.Errorf("invalid urn prefix: %q"u8, s[..9]));
         }
         s = s[9..];
+        break;
     }
-    else if (exprᴛ1 == 36 + 2) {
+    case var ᴛ when ᴛ == 36 + 2: {
         s = s[1..];
+        break;
     }
-    else if (exprᴛ1 is 32) {
-        bool ok = default!;
+    case 32: {
+        bool ok = default;
         foreach (var i in range(uuid)) {
             (uuid[i], ok) = xtob(s[i * 2], s[i * 2 + 1]);
             if (!ok) {
                 return (uuid.Clone(), errors.New("invalid UUID format"));
             }
         }
-        return (uuid.Clone(), default!);
+        return (uuid.Clone(), default);
     }
-    else { /* default: */
+    default: {
         return (uuid.Clone(), new invalidLengthError(len(s)));
-    }
+    }}
 
-    if (s[8] != (rune)'-' || s[13] != (rune)'-' || s[18] != (rune)'-' || s[23] != (rune)'-') {
+    if (s[8] != '-' || s[13] != '-' || s[18] != '-' || s[23] != '-') {
         return (uuid.Clone(), errors.New("invalid UUID format"));
     }
     foreach (var (i, x) in new nint[]{
@@ -95,38 +98,41 @@ public static (UUID, error) Parse(@string s) {
         }
         uuid[i] = v;
     }
-    return (uuid.Clone(), default!);
+    return (uuid.Clone(), default);
 }
 
 public static (UUID, error) ParseBytes(slice<byte> b) {
-    UUID uuid = default!;
-    var exprᴛ1 = len(b);
-    if (exprᴛ1 is 36) {
+    UUID uuid = default;
+    switch (len(b)) {
+    case 36: {
+        break;
     }
-    else if (exprᴛ1 == 36 + 9) {
+    case var ᴛ when ᴛ == 36 + 9: {
         if (!bytes.EqualFold(b[..9], slice<byte>("urn:uuid:"u8))) {
             return (uuid.Clone(), fmt.Errorf("invalid urn prefix: %q"u8, b[..9]));
         }
         b = b[9..];
+        break;
     }
-    else if (exprᴛ1 == 36 + 2) {
+    case var ᴛ when ᴛ == 36 + 2: {
         b = b[1..];
+        break;
     }
-    else if (exprᴛ1 is 32) {
-        bool ok = default!;
+    case 32: {
+        bool ok = default;
         for (nint i = 0; i < 32; i += 2) {
             (uuid[i / 2], ok) = xtob(b[i], b[i + 1]);
             if (!ok) {
                 return (uuid.Clone(), errors.New("invalid UUID format"));
             }
         }
-        return (uuid.Clone(), default!);
+        return (uuid.Clone(), default);
     }
-    else { /* default: */
+    default: {
         return (uuid.Clone(), new invalidLengthError(len(b)));
-    }
+    }}
 
-    if (b[8] != (rune)'-' || b[13] != (rune)'-' || b[18] != (rune)'-' || b[23] != (rune)'-') {
+    if (b[8] != '-' || b[13] != '-' || b[18] != '-' || b[23] != '-') {
         return (uuid.Clone(), errors.New("invalid UUID format"));
     }
     foreach (var (i, x) in new nint[]{
@@ -142,20 +148,20 @@ public static (UUID, error) ParseBytes(slice<byte> b) {
         }
         uuid[i] = v;
     }
-    return (uuid.Clone(), default!);
+    return (uuid.Clone(), default);
 }
 
 public static UUID MustParse(@string s) {
     var (uuid, err) = Parse(s);
-    if (err != default!) {
+    if (err != nil) {
         throw panic(@"uuid: Parse(" + s + @"): " + err.Error());
     }
     return uuid.Clone();
 }
 
 public static (UUID uuid, error err) FromBytes(slice<byte> b) {
-    UUID uuid = default!;
-    error err = default!;
+    UUID uuid = default;
+    error err = default;
 
     err = uuid.UnmarshalBinary(b);
     return (uuid.Clone(), err);
@@ -164,45 +170,49 @@ public static (UUID uuid, error err) FromBytes(slice<byte> b) {
 public static UUID Must(UUID uuid, error err) {
     uuid = uuid.Clone();
 
-    if (err != default!) {
+    if (err != nil) {
         throw panic(err);
     }
     return uuid.Clone();
 }
 
 public static error Validate(@string s) {
-    var exprᴛ1 = len(s);
-    if (exprᴛ1 is 36) {
+    switch (len(s)) {
+    case 36: {
+        break;
     }
-    else if (exprᴛ1 == 36 + 9) {
+    case var ᴛ when ᴛ == 36 + 9: {
         if (!strings.EqualFold(s[..9], "urn:uuid:")) {
             return fmt.Errorf("invalid urn prefix: %q"u8, s[..9]);
         }
         s = s[9..];
+        break;
     }
-    else if (exprᴛ1 == 36 + 2) {
-        if (s[0] != (rune)'{' || s[len(s) - 1] != (rune)'}') {
+    case var ᴛ when ᴛ == 36 + 2: {
+        if (s[0] != '{' || s[len(s) - 1] != '}') {
             return fmt.Errorf("invalid bracketed UUID format"u8);
         }
         s = s.slice(1, len(s) - 1);
+        break;
     }
-    else if (exprᴛ1 is 32) {
+    case 32: {
         for (nint i = 0; i < len(s); i += 2) {
             var (_, ok) = xtob(s[i], s[i + 1]);
             if (!ok) {
                 return errors.New("invalid UUID format");
             }
         }
+        break;
     }
-    else { /* default: */
+    default: {
         return new invalidLengthError(len(s));
-    }
+    }}
 
     if (len(s) == 36) {
-        if (s[8] != (rune)'-' || s[13] != (rune)'-' || s[18] != (rune)'-' || s[23] != (rune)'-') {
+        if (s[8] != '-' || s[13] != '-' || s[18] != '-' || s[23] != '-') {
             return errors.New("invalid UUID format");
         }
-        foreach (var (_, x) in new nint[]{0, 2, 4, 6, 9, 11, 14, 16, 19, 21, 24, 26, 28, 30, 32, 34}.slice()) {
+        foreach (var (_, x) in slice<nint>([0, 2, 4, 6, 9, 11, 14, 16, 19, 21, 24, 26, 28, 30, 32, 34])) {
             {
                 var (_, ok) = xtob(s[x], s[x + 1]); if (!ok) {
                     return errors.New("invalid UUID format");
@@ -211,7 +221,7 @@ public static error Validate(@string s) {
         }
     }
 
-    return default!;
+    return default;
 }
 
 public static @string String(this UUID uuid) {
@@ -235,13 +245,13 @@ internal static void encodeHex(slice<byte> dst, UUID uuid) {
     uuid = uuid.Clone();
 
     hex.Encode(dst, uuid[..4]);
-    dst[8] = (rune)'-';
+    dst[8] = (byte)'-';
     hex.Encode(dst[9..13], uuid[4..6]);
-    dst[13] = (rune)'-';
+    dst[13] = (byte)'-';
     hex.Encode(dst[14..18], uuid[6..8]);
-    dst[18] = (rune)'-';
+    dst[18] = (byte)'-';
     hex.Encode(dst[19..23], uuid[8..10]);
-    dst[23] = (rune)'-';
+    dst[23] = (byte)'-';
     hex.Encode(dst[24..], uuid[10..]);
 }
 
@@ -278,28 +288,28 @@ public static @string String(this ΔVersion v) {
 }
 
 public static @string String(this ΔVariant v) {
-    var exprᴛ1 = v;
-    if (exprᴛ1 == RFC4122) {
+    switch (v) {
+    case var ᴛ when ᴛ == RFC4122: {
         return "RFC4122";
     }
-    if (exprᴛ1 == Reserved) {
+    case var ᴛ when ᴛ == Reserved: {
         return "Reserved";
     }
-    if (exprᴛ1 == Microsoft) {
+    case var ᴛ when ᴛ == Microsoft: {
         return "Microsoft";
     }
-    if (exprᴛ1 == Future) {
+    case var ᴛ when ᴛ == Future: {
         return "Future";
     }
-    if (exprᴛ1 == Invalid) {
+    case var ᴛ when ᴛ == Invalid: {
         return "Invalid";
-    }
+    }}
 
-    return fmt.Sprintf("BadVariant%d"u8, (nint)(byte)v);
+    return fmt.Sprintf("BadVariant%d"u8, (nint)v);
 }
 
 public static void SetRand(io.Reader r) {
-    if (r == default!) {
+    if (r == nil) {
         rander = rand.Reader;
         return;
     }

@@ -26,22 +26,22 @@ public static (UUID, error) NewRandom() {
 }
 
 public static (UUID, error) NewRandomFromReader(io.Reader r) {
-    UUID uuid = default!;
+    UUID uuid = default;
     var (_, err) = io.ReadFull(r, uuid[..]);
-    if (err != default!) {
+    if (err != nil) {
         return (Nil.Clone(), err);
     }
     uuid[6] = (byte)(((byte)(uuid[6] & 0x0f)) | 0x40);
     uuid[8] = (byte)(((byte)(uuid[8] & 0x3f)) | 0x80);
-    return (uuid.Clone(), default!);
+    return (uuid.Clone(), default);
 }
 
 internal static (UUID, error) newRandomFromPool() {
-    UUID uuid = default!;
+    UUID uuid = default;
     ᏑpoolMu.Lock();
     if (poolPos == randPoolSize) {
         var (_, err) = io.ReadFull(rander, pool[..]);
-        if (err != default!) {
+        if (err != nil) {
             ᏑpoolMu.Unlock();
             return (Nil.Clone(), err);
         }
@@ -53,7 +53,7 @@ internal static (UUID, error) newRandomFromPool() {
 
     uuid[6] = (byte)(((byte)(uuid[6] & 0x0f)) | 0x40);
     uuid[8] = (byte)(((byte)(uuid[8] & 0x3f)) | 0x80);
-    return (uuid.Clone(), default!);
+    return (uuid.Clone(), default);
 }
 
 } // end uuid_package

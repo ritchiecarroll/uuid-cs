@@ -8,8 +8,8 @@ using sync = sync_package;
 
 partial class uuid_package {
 
-internal static ж<sync.Mutex> ᏑnodeMu = new StandardBox<sync.Mutex>(default(sync.Mutex));
-internal static ref sync.Mutex nodeMu => ref ᏑnodeMu.Value;
+internal static readonly ж<sync.Mutex> ᏑnodeMu = new StaticBox<sync.Mutex>(default(sync.Mutex));
+internal static ref sync.Mutex nodeMu => ref ((StaticBox<sync.Mutex>)ᏑnodeMu).ValueSlot;
 internal static @string ifname;
 internal static array<byte> nodeID = new(6);
 internal static array<byte> zeroID = new(6);
@@ -21,7 +21,7 @@ public static @string NodeInterface() {
         ᏑnodeMu.Lock();
         return ifname;
     }
-    catch (Exception ᒐex) when (GoFrame.IsPanic(ᒐex, out PanicException? ᒐp)) { GoFrame.Capture(ᒐp); return default!; }
+    catch (Exception ᒐex) when (GoFrame.IsPanic(ᒐex, out PanicException? ᒐp)) { GoFrame.Capture(ᒐp); return default; }
     finally { ᒐ.Run(); }
 }
 
@@ -32,13 +32,13 @@ public static bool SetNodeInterface(@string name) {
         ᏑnodeMu.Lock();
         return setNodeInterface(name);
     }
-    catch (Exception ᒐex) when (GoFrame.IsPanic(ᒐex, out PanicException? ᒐp)) { GoFrame.Capture(ᒐp); return default!; }
+    catch (Exception ᒐex) when (GoFrame.IsPanic(ᒐex, out PanicException? ᒐp)) { GoFrame.Capture(ᒐp); return default; }
     finally { ᒐ.Run(); }
 }
 
 internal static bool setNodeInterface(@string name) {
     var (iname, addr) = getHardwareInterface(name);
-    if (iname != ""u8 && addr != default!) {
+    if (iname != ""u8 && addr != nil) {
         ifname = iname;
         copy(nodeID[..], addr);
         return true;
@@ -63,7 +63,7 @@ public static slice<byte> NodeID() {
         var nid = nodeID.Clone();
         return nid[..];
     }
-    catch (Exception ᒐex) when (GoFrame.IsPanic(ᒐex, out PanicException? ᒐp)) { GoFrame.Capture(ᒐp); return default!; }
+    catch (Exception ᒐex) when (GoFrame.IsPanic(ᒐex, out PanicException? ᒐp)) { GoFrame.Capture(ᒐp); return default; }
     finally { ᒐ.Run(); }
 }
 
@@ -79,7 +79,7 @@ public static bool SetNodeID(slice<byte> id) {
         ifname = "user";
         return true;
     }
-    catch (Exception ᒐex) when (GoFrame.IsPanic(ᒐex, out PanicException? ᒐp)) { GoFrame.Capture(ᒐp); return default!; }
+    catch (Exception ᒐex) when (GoFrame.IsPanic(ᒐex, out PanicException? ᒐp)) { GoFrame.Capture(ᒐp); return default; }
     finally { ᒐ.Run(); }
 }
 

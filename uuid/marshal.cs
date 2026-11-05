@@ -13,22 +13,22 @@ public static (slice<byte>, error) MarshalText(this UUID uuid) {
 
     array<byte> js = new(36);
     encodeHex(js[..], uuid);
-    return (js[..], default!);
+    return (js[..], default);
 }
 
 public static error UnmarshalText(this ref UUID uuid, slice<byte> data) {
     var (id, err) = ParseBytes(data);
-    if (err != default!) {
+    if (err != nil) {
         return err;
     }
     uuid = id.Clone();
-    return default!;
+    return default;
 }
 
 public static (slice<byte>, error) MarshalBinary(this UUID uuid) {
     uuid = uuid.Clone();
 
-    return (uuid[..], default!);
+    return (uuid[..], default);
 }
 
 public static error UnmarshalBinary(this ref UUID uuid, slice<byte> data) {
@@ -36,7 +36,7 @@ public static error UnmarshalBinary(this ref UUID uuid, slice<byte> data) {
         return fmt.Errorf("invalid UUID (got %d bytes)"u8, len(data));
     }
     copy(uuid.Value[..], data);
-    return default!;
+    return default;
 }
 
 } // end uuid_package

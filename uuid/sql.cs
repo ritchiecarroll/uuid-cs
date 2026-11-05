@@ -13,15 +13,15 @@ partial class uuid_package {
 public static error Scan(this ref UUID uuid, any src) {
     switch (src.type()) {
     case null: {
-        return default!;
+        return default;
     }
     case @string srcΔ1: {
         if (srcΔ1 == ""u8) {
-            return default!;
+            return default;
         }
 
         var (u, err) = Parse(srcΔ1);
-        if (err != default!) {
+        if (err != nil) {
             return fmt.Errorf("Scan: %v"u8, err);
         }
 
@@ -30,7 +30,7 @@ public static error Scan(this ref UUID uuid, any src) {
     }
     case slice<byte> srcΔ1: {
         if (len(srcΔ1) == 0) {
-            return default!;
+            return default;
         }
 
         if (len(srcΔ1) != 16) {
@@ -44,13 +44,13 @@ public static error Scan(this ref UUID uuid, any src) {
         return fmt.Errorf("Scan: unable to scan type %T into UUID"u8, srcΔ1);
     }}
 
-    return default!;
+    return default;
 }
 
 public static (driverꓸValue, error) Value(this UUID uuid) {
     uuid = uuid.Clone();
 
-    return (uuid.String(), default!);
+    return (uuid.String(), default);
 }
 
 } // end uuid_package

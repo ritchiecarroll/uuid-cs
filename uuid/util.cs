@@ -10,7 +10,7 @@ partial class uuid_package {
 
 internal static void randomBits(slice<byte> b) {
     {
-        var (_, err) = io.ReadFull(rander, b); if (err != default!) {
+        var (_, err) = io.ReadFull(rander, b); if (err != nil) {
             throw panic(err.Error());
         }
     }

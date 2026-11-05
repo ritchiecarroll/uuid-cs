@@ -10,15 +10,15 @@ using encoding;
 partial class uuid_package {
 
 public static (UUID, error) NewUUID() {
-    UUID uuid = default!;
+    UUID uuid = default;
     var (now, seq, err) = GetTime();
-    if (err != default!) {
+    if (err != nil) {
         return (uuid.Clone(), err);
     }
 
-    var timeLow = (uint32)(int64)((ΔTime)(now & 0xffffffffL));
-    var timeMid = (uint16)(int64)((ΔTime)((now >> 32) & 0xffff));
-    var timeHi = (uint16)(int64)((ΔTime)((now >> 48) & 0x0fff));
+    var timeLow = (uint32)((ΔTime)(now & 0xffffffffL));
+    var timeMid = (uint16)((ΔTime)((now >> 32) & 0xffff));
+    var timeHi = (uint16)((ΔTime)((now >> 48) & 0x0fff));
     timeHi |= (uint16)(0x1000);
 
     binary.BigEndian.PutUint32(uuid[0..], timeLow);
@@ -33,7 +33,7 @@ public static (UUID, error) NewUUID() {
     copy(uuid[10..], nodeID[..]);
     ᏑnodeMu.Unlock();
 
-    return (uuid.Clone(), default!);
+    return (uuid.Clone(), default);
 }
 
 } // end uuid_package

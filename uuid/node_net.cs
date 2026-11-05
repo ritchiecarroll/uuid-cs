@@ -11,11 +11,11 @@ partial class uuid_package {
 internal static slice<net.Interface> interfaces;
 
 internal static (@string, slice<byte>) getHardwareInterface(@string name) {
-    if (interfaces == default!) {
-        error err = default!;
+    if (interfaces == nil) {
+        error err = default;
         (interfaces, err) = net.Interfaces();
-        if (err != default!) {
-            return ("", default!);
+        if (err != nil) {
+            return ("", default);
         }
     }
     foreach (var (_, ifs) in interfaces) {
@@ -23,7 +23,7 @@ internal static (@string, slice<byte>) getHardwareInterface(@string name) {
             return (ifs.Name, ifs.HardwareAddr);
         }
     }
-    return ("", default!);
+    return ("", default);
 }
 
 } // end uuid_package

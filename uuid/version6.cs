@@ -10,13 +10,13 @@ using encoding;
 partial class uuid_package {
 
 public static (UUID, error) NewV6() {
-    UUID uuid = default!;
+    UUID uuid = default;
     var (now, seq, err) = GetTime();
-    if (err != default!) {
+    if (err != nil) {
         return (uuid.Clone(), err);
     }
 
-    binary.BigEndian.PutUint64(uuid[0..], (uint64)(int64)now);
+    binary.BigEndian.PutUint64(uuid[0..], (uint64)now);
     binary.BigEndian.PutUint16(uuid[8..], seq);
 
     uuid[6] = (byte)(0x60 | ((byte)(uuid[6] & 0x0F)));
@@ -29,7 +29,7 @@ public static (UUID, error) NewV6() {
     copy(uuid[10..], nodeID[..]);
     ᏑnodeMu.Unlock();
 
-    return (uuid.Clone(), default!);
+    return (uuid.Clone(), default);
 }
 
 } // end uuid_package
