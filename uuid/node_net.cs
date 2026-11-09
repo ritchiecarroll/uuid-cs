@@ -18,7 +18,7 @@ internal static (@string, slice<byte>) getHardwareInterface(@string name) {
             return ("", default);
         }
     }
-    foreach (var (_, ifs) in interfaces) {
+    foreach (var (_, ifs) in range(interfaces)) {
         if (len(ifs.HardwareAddr) >= 6 && (name == ""u8 || name == ifs.Name)) {
             return (ifs.Name, ifs.HardwareAddr);
         }

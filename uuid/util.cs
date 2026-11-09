@@ -9,10 +9,8 @@ using io = io_package;
 partial class uuid_package {
 
 internal static void randomBits(slice<byte> b) {
-    {
-        var (_, err) = io.ReadFull(rander, b); if (err != nil) {
-            throw panic(err.Error());
-        }
+    var (_, err) = io.ReadFull(rander, b); if (err != nil) {
+        throw panic(err.Error());
     }
 }
 

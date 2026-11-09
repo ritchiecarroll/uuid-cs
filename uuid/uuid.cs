@@ -70,7 +70,7 @@ public static (UUID, error) Parse(@string s) {
     }
     case 32: {
         bool ok = default;
-        foreach (var i in range(uuid)) {
+        foreach (var i in range(len(uuid))) {
             (uuid[i], ok) = xtob(s[i * 2], s[i * 2 + 1]);
             if (!ok) {
                 return (uuid.Clone(), errors.New("invalid UUID format"));
@@ -85,13 +85,13 @@ public static (UUID, error) Parse(@string s) {
     if (s[8] != '-' || s[13] != '-' || s[18] != '-' || s[23] != '-') {
         return (uuid.Clone(), errors.New("invalid UUID format"));
     }
-    foreach (var (i, x) in new nint[]{
+    foreach (var (i, x) in range(new nint[]{
         0, 2, 4, 6,
         9, 11,
         14, 16,
         19, 21,
         24, 26, 28, 30, 32, 34
-    }.array()) {
+    }.array())) {
         var (v, ok) = xtob(s[x], s[x + 1]);
         if (!ok) {
             return (uuid.Clone(), errors.New("invalid UUID format"));
@@ -135,13 +135,13 @@ public static (UUID, error) ParseBytes(slice<byte> b) {
     if (b[8] != '-' || b[13] != '-' || b[18] != '-' || b[23] != '-') {
         return (uuid.Clone(), errors.New("invalid UUID format"));
     }
-    foreach (var (i, x) in new nint[]{
+    foreach (var (i, x) in range(new nint[]{
         0, 2, 4, 6,
         9, 11,
         14, 16,
         19, 21,
         24, 26, 28, 30, 32, 34
-    }.array()) {
+    }.array())) {
         var (v, ok) = xtob(b[x], b[x + 1]);
         if (!ok) {
             return (uuid.Clone(), errors.New("invalid UUID format"));
@@ -212,11 +212,9 @@ public static error Validate(@string s) {
         if (s[8] != '-' || s[13] != '-' || s[18] != '-' || s[23] != '-') {
             return errors.New("invalid UUID format");
         }
-        foreach (var (_, x) in slice<nint>([0, 2, 4, 6, 9, 11, 14, 16, 19, 21, 24, 26, 28, 30, 32, 34])) {
-            {
-                var (_, ok) = xtob(s[x], s[x + 1]); if (!ok) {
-                    return errors.New("invalid UUID format");
-                }
+        foreach (var (_, x) in range(slice<nint>([0, 2, 4, 6, 9, 11, 14, 16, 19, 21, 24, 26, 28, 30, 32, 34]))) {
+            var (_, ok) = xtob(s[x], s[x + 1]); if (!ok) {
+                return errors.New("invalid UUID format");
             }
         }
     }
@@ -336,7 +334,7 @@ partial struct UUIDs /*[]UUID*/;
 
 public static slice<@string> Strings(this UUIDs uuids) {
     slice<@string> uuidStrs = new slice<@string>(len(uuids));
-    foreach (var (i, vᴛ1) in uuids) {
+    foreach (var (i, vᴛ1) in range<UUID>(uuids)) {
         var uuid = vᴛ1.Clone();
 
         uuidStrs[i] = uuid.String();

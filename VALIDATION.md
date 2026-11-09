@@ -9,7 +9,7 @@ Both sides of every reading were built with `-tags purego,math_big_pure_go,safe`
 
 | Package | Matched | Disclosed | Input digest | Proof |
 |:--|--:|--:|:--|:--|
-| `github.com/google/uuid` | 54 | 0 | `sha256-1d8a15a7541f6e0b9da0961977cf4387f1bd6f8516b4de6be3930ed70fafd2bb` | [index.md](index.md) |
+| `github.com/google/uuid` | 54 | 0 | `sha256-c5761771f1f6e5248aec6c0e344fb9d33ceb9fdd7ad9c4990091774c177ef0cc` | [index.md](index.md) |
 
 **Total: 54 matched · 0 disclosed** across 1 package(s).
 
