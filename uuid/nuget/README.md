@@ -4,7 +4,7 @@
 
 > unofficial go2cs C# conversion of [github.com/google/uuid](https://github.com/google/uuid/tree/v1.6.0) v1.6.0, built on the Go 1.26.10 standard library; not affiliated with or endorsed by Google Inc. or the Go project. Security: the Go standard library this package is built on includes no Go security fixes released after Go 1.26.10; review before any production use.
 
-[![Tests](https://img.shields.io/badge/Tests-54_matched_%2F_0_disclosed-brightgreen?logo=go)](https://github.com/ritchiecarroll/uuid-cs/blob/nuget-1.6.0.3/VALIDATION.md) [![C# Source](https://img.shields.io/badge/C%23_Source-@1.6.0.3-512BD4?logo=dotnet)](https://github.com/ritchiecarroll/uuid-cs/tree/nuget-1.6.0.3)\
+[![converted by go2cs](https://go2cs.net/images/go2cs-badge.svg)](https://go2cs.net) [![Tests](https://img.shields.io/badge/Tests-54_matched_%2F_0_disclosed-brightgreen?logo=go)](https://github.com/ritchiecarroll/uuid-cs/blob/nuget-1.6.0.3/VALIDATION.md) [![C# Source](https://img.shields.io/badge/C%23_Source-@1.6.0.3-512BD4?logo=dotnet)](https://github.com/ritchiecarroll/uuid-cs/tree/nuget-1.6.0.3)\
 [![Go module](https://img.shields.io/badge/Go_module-@v1.6.0-00ADD8?logo=go)](https://pkg.go.dev/github.com/google/uuid@v1.6.0) [![go2cs](https://img.shields.io/badge/go2cs-@1.26.10.3-512BD4?logo=dotnet)](https://github.com/ritchiecarroll/go2cs/tree/nuget-1.26.10.3)
 
 Converted from [github.com/google/uuid](https://github.com/google/uuid/tree/v1.6.0) source to C# in [ritchiecarroll/uuid-cs](https://github.com/ritchiecarroll/uuid-cs/tree/nuget-1.6.0.3); licensed under BSD-3-Clause — see [LICENSE](https://github.com/ritchiecarroll/uuid-cs/blob/nuget-1.6.0.3/LICENSE).
