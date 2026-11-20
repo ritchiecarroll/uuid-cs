@@ -10,6 +10,7 @@ using json = encoding.json_package;
 using fmt = fmt_package;
 using database.sql;
 using encoding;
+using static uuid_package;
 
 partial class uuid_package {
 
@@ -20,9 +21,13 @@ partial struct NullUUID {
     public bool Valid;
 }
 
+} partial class uuidᴛNullUUID {
+
 public static error Scan(this ref NullUUID nu, any value) {
     if (value == nil) {
-        (nu.UUID, nu.Valid) = (Nil.Clone(), false);
+        ref var nuᴛ1 = ref nu.UUID;
+        (var nuᴛ2, nu.Valid) = (Nil.Clone(), false);
+        nuᴛ1.Assign(nuᴛ2);
         return default;
     }
 
@@ -80,7 +85,7 @@ public static error UnmarshalText(this ref NullUUID nu, slice<byte> data) {
         nu.Valid = false;
         return err;
     }
-    nu.UUID = id.Clone();
+    nu.UUID.Assign(id);
     nu.Valid = true;
     return default;
 }
@@ -99,7 +104,7 @@ public static error UnmarshalJSON(this ж<NullUUID> Ꮡnu, slice<byte> data) {
     ref var nu = ref Ꮡnu.DerefOrNull();
 
     if (bytes.Equal(data, jsonNull)) {
-        nu = new NullUUID();
+        nu.AssignFrom(new NullUUID());
         return default;
     }
     var err = json.Unmarshal(data, Ꮡnu.ᏑUUID);
@@ -107,4 +112,4 @@ public static error UnmarshalJSON(this ж<NullUUID> Ꮡnu, slice<byte> data) {
     return err;
 }
 
-} // end uuid_package
+} // end uuidᴛNullUUID

@@ -28,10 +28,6 @@ using static go.github.com.google.uuid_package;
 // when referenced.
 
 // <ExportedTypeAliases>
-[assembly: GoTypeAlias("Domain", "ΔDomain")]
-[assembly: GoTypeAlias("Time", "ΔTime")]
-[assembly: GoTypeAlias("Variant", "ΔVariant")]
-[assembly: GoTypeAlias("Version", "ΔVersion")]
 // </ExportedTypeAliases>
 
 // As types are cast to interfaces in Go source code, the go2cs code converter
@@ -59,16 +55,16 @@ using static go.github.com.google.uuid_package;
 // or has none - golib, the BCL and hand-written conversions - and reports its own C# position.
 
 // <GoSourcePositionMaps>
-[assembly: GoPositionMap("github.com/google/uuid@v1.6.0/dce.go", "dce.cs", "ABNAgoKCgoKUroKugqqiqqKmgpSkpKQ=")]
+[assembly: GoPositionMap("github.com/google/uuid@v1.6.0/dce.go", "dce.cs", "ABRAgoKCgoKUroKugsqiqqLGgpSkpKQ=")]
 [assembly: GoPositionMap("github.com/google/uuid@v1.6.0/hash.go", "hash.cs", "AA8e0tLS2AAFFqKCgoKCgoKCgq6irqI=")]
-[assembly: GoPositionMap("github.com/google/uuid@v1.6.0/marshal.go", "marshal.cs", "AAoUooKCqIKCgpSCqKKogoKUgg==")]
-[assembly: GoPositionMap("github.com/google/uuid@v1.6.0/node.go", "node.cs", "ABAqooKCAAUSooKC1oKCgoKCrIKCgpSqooKCgpSC3KKClIKCgoLaooKC")]
+[assembly: GoPositionMap("github.com/google/uuid@v1.6.0/marshal.go", "marshal.cs", "AA0UooKCqIKCgpSCqKKogoKUgg==")]
+[assembly: GoPositionMap("github.com/google/uuid@v1.6.0/node.go", "node.cs", "ABEqooKCAAUSooKC1oKCgoKCrIKCgpSqooKCgpSC3KKClIKCgoL6ooKC")]
 [assembly: GoPositionMap("github.com/google/uuid@v1.6.0/node_net.go", "node_net.cs", "AAwmgoKCgoKmgoKm")]
-[assembly: GoPositionMap("github.com/google/uuid@v1.6.0/null.go", "null.cs", "AA8cAAYqgoKCpoKCgqaCqKKClqiigqaogoKUgoKoooKmqIKCgoKUgoKoooKmqKKCgpSCgg==")]
-[assembly: GoPositionMap("github.com/google/uuid@v1.6.0/sql.go", "sql.cs", "AAwegpSogqiCgqa4gqqClMamrKI=")]
-[assembly: GoPositionMap("github.com/google/uuid@v1.6.0/time.go", "time.cs", "ABk8mrKCgoKsooKC1oKWgpSYgpSCAAIUooKC1oKClKqigoKipIKCgoKUgoKCvKKClIK0grSCgoK0qqI=")]
+[assembly: GoPositionMap("github.com/google/uuid@v1.6.0/null.go", "null.cs", "ABAcAAgqgoKipoKCgqaCqKKClqiigqaogoKUgoKoooKmqIKCgoKUgoKoooKmqKKCgpSCgg==")]
+[assembly: GoPositionMap("github.com/google/uuid@v1.6.0/sql.go", "sql.cs", "AA8egpSogqiCgqa4gqqClMamrKI=")]
+[assembly: GoPositionMap("github.com/google/uuid@v1.6.0/time.go", "time.cs", "ABo8urKCgoLMooKC1oKWgpSYgpSCAAIUooKC1oKClKqigoKipIKCgoKUgoKC3KKClIK0grSCgoK0qqI=")]
 [assembly: GoPositionMap("github.com/google/uuid@v1.6.0/util.go", "util.cs", "AAoYgoK6ABIogoKC")]
-[assembly: GoPositionMap("github.com/google/uuid@v1.6.0/uuid.go", "uuid.cs", "ACFQAAoSgqiCggACGIKCzIKUuLiCgoKCpqSogpTugoKUlKiCgsaClLS0goKCgqakqIKU7oKClJSqgoKClKqygqiigpQAAhKCzIKUuIKUuIKCgtqogoKUgoLKqqKCgqqigoKCpqKCgoKCgoKCgqiilKSkpMqipoKClKaClKSkpKSkAAISgoKClAACHIIAAhKigoKCosyCgqKU")]
+[assembly: GoPositionMap("github.com/google/uuid@v1.6.0/uuid.go", "uuid.cs", "ACJQAAwSgsiCggACGIKCzIKUuLiCgoKCpqSogpTugoKUlKiCgsaClLS0goKCgqakqIKU7oKClJSqgoKClKqygqiigpQAAhKCzIKUuIKUuIKCgtqogoKUgoLKyqKCgqqigoKCxqKCgoKCgoKCgsiilKSkpMqixoKClMaClKSkpKSkAAQSgoKClAACHIIAAhKigoKCouyCgqKU")]
 [assembly: GoPositionMap("github.com/google/uuid@v1.6.0/version1.go", "version1.cs", "AAsmgoKCgqaCgoKUgoKClIKClIKU")]
 [assembly: GoPositionMap("github.com/google/uuid@v1.6.0/version4.go", "version4.cs", "AAoagr6CAAMigoKUqIKCgoKUgoKmgoKCgoKCgpSUgoKUgoI=")]
 [assembly: GoPositionMap("github.com/google/uuid@v1.6.0/version6.go", "version6.cs", "AAsqgoKCggACIoKUgpSCgpSClA==")]
@@ -88,13 +84,13 @@ public static partial class uuid_package
 
     // <TypeAccessibility>
     internal partial struct invalidLengthError {}
+    public partial struct Domain {}
     [GoValueClone("UUID")] public partial struct NullUUID {}
+    public partial struct Time {}
     public partial struct UUID {}
     public partial struct UUIDs {}
-    public partial struct ΔDomain {}
-    public partial struct ΔTime {}
-    public partial struct ΔVariant {}
-    public partial struct ΔVersion {}
+    public partial struct Variant {}
+    public partial struct Version {}
     // </TypeAccessibility>
 
     // Go initializes an imported package before the importing package, for every import
@@ -123,3 +119,20 @@ public static partial class uuid_package
     [GoInit] internal static void initᴛᴛimportꓸtime() => builtin.initPackage(typeof(time_package));
     // </ImportInitializers>
 }
+
+// A Go method is an extension method on its receiver type. The methods of one type are
+// in a class of their own beside the package class, so that a method and a package-level
+// type, constant or variable can share a name as they do in Go. Each class is declared
+// below with the type it holds the methods of; its blocks are in the converted sources,
+// in Go's declaration order.
+
+// <MethodHolders>
+[GoMethodHost(typeof(uuid_package.Domain)), global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)] public static partial class uuidᴛDomain;
+[GoMethodHost(typeof(uuid_package.NullUUID)), global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)] public static partial class uuidᴛNullUUID;
+[GoMethodHost(typeof(uuid_package.Time)), global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)] public static partial class uuidᴛTime;
+[GoMethodHost(typeof(uuid_package.UUID)), global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)] public static partial class uuidᴛUUID;
+[GoMethodHost(typeof(uuid_package.UUIDs)), global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)] public static partial class uuidᴛUUIDs;
+[GoMethodHost(typeof(uuid_package.Variant)), global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)] public static partial class uuidᴛVariant;
+[GoMethodHost(typeof(uuid_package.Version)), global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)] public static partial class uuidᴛVersion;
+[GoMethodHost(typeof(uuid_package.invalidLengthError)), global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)] public static partial class uuidᴛinvalidLengthError;
+// </MethodHolders>

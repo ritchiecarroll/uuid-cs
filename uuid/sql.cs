@@ -7,8 +7,11 @@ namespace go.github.com.google;
 using driver = database.sql.driver_package;
 using fmt = fmt_package;
 using database.sql;
+using static uuid_package;
 
 partial class uuid_package {
+
+} partial class uuidᴛUUID {
 
 public static error Scan(this ref UUID uuid, any src) {
     switch (src.type()) {
@@ -25,7 +28,7 @@ public static error Scan(this ref UUID uuid, any src) {
             return fmt.Errorf("Scan: %v"u8, err);
         }
 
-        uuid = u.Clone();
+        uuid.Assign(u);
         break;
     }
     case slice<byte> srcΔ1: {
@@ -53,4 +56,4 @@ public static (driverꓸValue, error) Value(this UUID uuid) {
     return (uuid.String(), default);
 }
 
-} // end uuid_package
+} // end uuidᴛUUID

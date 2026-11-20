@@ -16,9 +16,9 @@ public static (UUID, error) NewUUID() {
         return (uuid.Clone(), err);
     }
 
-    var timeLow = (uint32)((ΔTime)(now & 0xffffffffL));
-    var timeMid = (uint16)((ΔTime)((now >> 32) & 0xffff));
-    var timeHi = (uint16)((ΔTime)((now >> 48) & 0x0fff));
+    var timeLow = (uint32)((Time)(now & 0xffffffffL));
+    var timeMid = (uint16)((Time)((now >> 32) & 0xffff));
+    var timeHi = (uint16)((Time)((now >> 48) & 0x0fff));
     timeHi |= (uint16)(0x1000);
 
     binary.BigEndian.PutUint32(uuid[0..], timeLow);

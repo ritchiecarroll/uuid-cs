@@ -5,6 +5,7 @@
 namespace go.github.com.google;
 
 using sync = sync_package;
+using static uuid_package;
 
 partial class uuid_package {
 
@@ -83,6 +84,8 @@ public static bool SetNodeID(slice<byte> id) {
     finally { ᒐ.Run(); }
 }
 
+} partial class uuidᴛUUID {
+
 public static slice<byte> NodeID(this UUID uuid) {
     uuid = uuid.Clone();
 
@@ -91,4 +94,4 @@ public static slice<byte> NodeID(this UUID uuid) {
     return node[..];
 }
 
-} // end uuid_package
+} // end uuidᴛUUID

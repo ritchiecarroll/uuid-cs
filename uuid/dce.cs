@@ -8,16 +8,17 @@ using binary = encoding.binary_package;
 using fmt = fmt_package;
 using os = os_package;
 using encoding;
+using static uuid_package;
 
 partial class uuid_package {
 
-partial struct ΔDomain /*num:byte*/;
+partial struct Domain /*num:byte*/;
 
-public static ΔDomain Person => /* Domain(0) */ 0;
-public static ΔDomain Group => /* Domain(1) */ 1;
-public static ΔDomain Org => /* Domain(2) */ 2;
+public static Domain Person => /* Domain(0) */ 0;
+public static Domain Group => /* Domain(1) */ 1;
+public static Domain Org => /* Domain(2) */ 2;
 
-public static (UUID, error) NewDCESecurity(ΔDomain domain, uint32 id) {
+public static (UUID, error) NewDCESecurity(Domain domain, uint32 id) {
     var (uuid, err) = NewUUID();
     if (err == nil) {
         uuid[6] = (byte)(((byte)(uuid[6] & 0x0f)) | 0x20);
@@ -35,10 +36,12 @@ public static (UUID, error) NewDCEGroup() {
     return NewDCESecurity(Group, (uint32)os.Getgid());
 }
 
-public static ΔDomain Domain(this UUID uuid) {
+} partial class uuidᴛUUID {
+
+public static Domain Domain(this UUID uuid) {
     uuid = uuid.Clone();
 
-    return (ΔDomain)uuid[9];
+    return (Domain)uuid[9];
 }
 
 public static uint32 ID(this UUID uuid) {
@@ -47,7 +50,9 @@ public static uint32 ID(this UUID uuid) {
     return binary.BigEndian.Uint32(uuid[0..4]);
 }
 
-public static @string String(this ΔDomain d) {
+} partial class uuidᴛDomain {
+
+public static @string String(this Domain d) {
     switch (d) {
     case var ᴛ when ᴛ == Person: {
         return "Person";
@@ -62,4 +67,4 @@ public static @string String(this ΔDomain d) {
     return fmt.Sprintf("Domain%d"u8, (nint)d);
 }
 
-} // end uuid_package
+} // end uuidᴛDomain

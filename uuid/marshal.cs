@@ -5,8 +5,11 @@
 namespace go.github.com.google;
 
 using fmt = fmt_package;
+using static uuid_package;
 
 partial class uuid_package {
+
+} partial class uuidᴛUUID {
 
 public static (slice<byte>, error) MarshalText(this UUID uuid) {
     uuid = uuid.Clone();
@@ -21,7 +24,7 @@ public static error UnmarshalText(this ref UUID uuid, slice<byte> data) {
     if (err != nil) {
         return err;
     }
-    uuid = id.Clone();
+    uuid.Assign(id);
     return default;
 }
 
@@ -39,4 +42,4 @@ public static error UnmarshalBinary(this ref UUID uuid, slice<byte> data) {
     return default;
 }
 
-} // end uuid_package
+} // end uuidᴛUUID

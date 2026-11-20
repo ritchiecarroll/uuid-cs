@@ -8,10 +8,11 @@ using binary = encoding.binary_package;
 using sync = sync_package;
 using time = time_package;
 using encoding;
+using static uuid_package;
 
 partial class uuid_package {
 
-partial struct ΔTime /*num:int64*/;
+partial struct Time /*num:int64*/;
 
 internal static UntypedInt lillian => 2299160;
 internal static UntypedInt unix => 2440587;
@@ -25,7 +26,9 @@ internal static uint64 lasttime;
 internal static uint16 clockSeq;
 internal static Func<time.Time> timeNow = time.Now;
 
-public static (int64 sec, int64 nsec) UnixTime(this ΔTime t) {
+} partial class uuidᴛTime {
+
+public static (int64 sec, int64 nsec) UnixTime(this Time t) {
     int64 sec = default;
     int64 nsec = default;
 
@@ -35,7 +38,9 @@ public static (int64 sec, int64 nsec) UnixTime(this ΔTime t) {
     return (sec, nsec);
 }
 
-public static (ΔTime, uint16, error) GetTime() {
+} partial class uuid_package {
+
+public static (Time, uint16, error) GetTime() {
     GoFrame ᒐ = default;
     try {
         defer(ᏑtimeMu.Unlock, ref ᒐ);
@@ -46,7 +51,7 @@ public static (ΔTime, uint16, error) GetTime() {
     finally { ᒐ.Run(); }
 }
 
-internal static (ΔTime, uint16, error) getTime() {
+internal static (Time, uint16, error) getTime() {
     var t = timeNow();
 
     if (clockSeq == 0) {
@@ -58,7 +63,7 @@ internal static (ΔTime, uint16, error) getTime() {
         clockSeq = (uint16)(((uint16)((clockSeq + 1) & 0x3fff)) | 0x8000);
     }
     lasttime = now;
-    return ((ΔTime)(int64)now, clockSeq, default);
+    return ((Time)(int64)now, clockSeq, default);
 }
 
 public static nint ClockSequence() {
@@ -103,26 +108,28 @@ internal static void setClockSequence(nint seq) {
     }
 }
 
-public static ΔTime Time(this UUID uuid) {
+} partial class uuidᴛUUID {
+
+public static Time Time(this UUID uuid) {
     uuid = uuid.Clone();
 
-    ΔTime t = default;
+    Time t = default;
     switch (uuid.Version()) {
-    case var ᴛ when ᴛ == (ΔVersion)(6): {
+    case var ᴛ when ᴛ == (Version)(6): {
         var time = binary.BigEndian.Uint64(uuid[..8]);
-        t = (ΔTime)(int64)time;
+        t = (Time)(int64)time;
         break;
     }
-    case var ᴛ when ᴛ == (ΔVersion)(7): {
+    case var ᴛ when ᴛ == (Version)(7): {
         var time = binary.BigEndian.Uint64(uuid[..8]);
-        t = (ΔTime)(int64)((time >> 16) * 10000 + (uint64)g1582ns100);
+        t = (Time)(int64)((time >> 16) * 10000 + (uint64)g1582ns100);
         break;
     }
     default: {
         var time = (int64)binary.BigEndian.Uint32(uuid[0..4]);
         time |= (int64)(((int64)binary.BigEndian.Uint16(uuid[4..6]) << 32));
         time |= (int64)(((int64)((uint16)(binary.BigEndian.Uint16(uuid[6..8]) & 0xfff)) << 48));
-        t = (ΔTime)time;
+        t = (Time)time;
         break;
     }}
 
@@ -135,4 +142,4 @@ public static nint ClockSequence(this UUID uuid) {
     return (nint)binary.BigEndian.Uint16(uuid[8..10]) & 0x3fff;
 }
 
-} // end uuid_package
+} // end uuidᴛUUID

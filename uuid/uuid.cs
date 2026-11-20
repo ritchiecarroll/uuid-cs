@@ -14,20 +14,21 @@ using strings = strings_package;
 using sync = sync_package;
 using crypto;
 using encoding;
+using static uuid_package;
 
 partial class uuid_package {
 
 partial struct UUID /*[16]byte*/;
 
-partial struct ΔVersion /*num:byte*/;
+partial struct Version /*num:byte*/;
 
-partial struct ΔVariant /*num:byte*/;
+partial struct Variant /*num:byte*/;
 
-public static ΔVariant Invalid => /* Variant(iota) */ 0;
-public static ΔVariant RFC4122 => 1;
-public static ΔVariant Reserved => 2;
-public static ΔVariant Microsoft => 3;
-public static ΔVariant Future => 4;
+public static Variant Invalid => /* Variant(iota) */ 0;
+public static Variant RFC4122 => 1;
+public static Variant Reserved => 2;
+public static Variant Microsoft => 3;
+public static Variant Future => 4;
 
 internal static UntypedInt randPoolSize => /* 16 * 16 */ 256;
 
@@ -42,9 +43,13 @@ partial struct invalidLengthError {
     internal nint len;
 }
 
+} partial class uuidᴛinvalidLengthError {
+
 internal static @string Error(this invalidLengthError err) {
     return fmt.Sprintf("invalid UUID length: %d"u8, err.len);
 }
+
+} partial class uuid_package {
 
 public static bool IsInvalidLengthError(error err) {
     var (_, ok) = err._<invalidLengthError>(ᐧ);
@@ -222,6 +227,8 @@ public static error Validate(@string s) {
     return default;
 }
 
+} partial class uuidᴛUUID {
+
 public static @string String(this UUID uuid) {
     uuid = uuid.Clone();
 
@@ -239,6 +246,8 @@ public static @string URN(this UUID uuid) {
     return (@string)(buf[..]);
 }
 
+} partial class uuid_package {
+
 internal static void encodeHex(slice<byte> dst, UUID uuid) {
     uuid = uuid.Clone();
 
@@ -253,7 +262,9 @@ internal static void encodeHex(slice<byte> dst, UUID uuid) {
     hex.Encode(dst[24..], uuid[10..]);
 }
 
-public static ΔVariant Variant(this UUID uuid) {
+} partial class uuidᴛUUID {
+
+public static Variant Variant(this UUID uuid) {
     uuid = uuid.Clone();
 
     switch (ᐧ) {
@@ -272,20 +283,24 @@ public static ΔVariant Variant(this UUID uuid) {
 
 }
 
-public static ΔVersion Version(this UUID uuid) {
+public static Version Version(this UUID uuid) {
     uuid = uuid.Clone();
 
-    return (ΔVersion)(uuid[6] >> 4);
+    return (Version)(uuid[6] >> 4);
 }
 
-public static @string String(this ΔVersion v) {
+} partial class uuidᴛVersion {
+
+public static @string String(this Version v) {
     if (v > 15) {
         return fmt.Sprintf("BAD_VERSION_%d"u8, v);
     }
     return fmt.Sprintf("VERSION_%d"u8, v);
 }
 
-public static @string String(this ΔVariant v) {
+} partial class uuidᴛVariant {
+
+public static @string String(this Variant v) {
     switch (v) {
     case var ᴛ when ᴛ == RFC4122: {
         return "RFC4122";
@@ -305,6 +320,8 @@ public static @string String(this ΔVariant v) {
 
     return fmt.Sprintf("BadVariant%d"u8, (nint)v);
 }
+
+} partial class uuid_package {
 
 public static void SetRand(io.Reader r) {
     if (r == nil) {
@@ -332,6 +349,8 @@ public static void DisableRandPool() {
 
 partial struct UUIDs /*[]UUID*/;
 
+} partial class uuidᴛUUIDs {
+
 public static slice<@string> Strings(this UUIDs uuids) {
     slice<@string> uuidStrs = new slice<@string>(len(uuids));
     foreach (var (i, vᴛ1) in range<UUID>(uuids)) {
@@ -342,4 +361,4 @@ public static slice<@string> Strings(this UUIDs uuids) {
     return uuidStrs;
 }
 
-} // end uuid_package
+} // end uuidᴛUUIDs
